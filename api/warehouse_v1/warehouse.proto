@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package warehouse_v1;
+
+option go_package = "github.com/sarastee/LamodaTest/pkg/warehouse_v1;warehouse_v1";
+
+service WarehouseV1 {
+  rpc ReserveProducts(ReserveProductsRequest) returns (ReserveProductsResponse);
+  rpc UndoReserveProducts(UndoReserveProductsRequest) returns (UndoReserveProductsResponse);
+  rpc ReleaseReserve(ReleaseReserveRequest) returns (ReleaseReserveResponse);
+  rpc GetRemainingProducts(GetRemainingProductsRequest) returns (GetRemainingProductsResponse);
+}
+
+message ReserveProductsRequest {
+  repeated int32 codes = 1;
+}
+
+message ReserveProductsResponse {
+  string message = 1;
+}
+
+message UndoReserveProductsRequest {
+  repeated int32 codes = 1;
+}
+
+message UndoReserveProductsResponse {
+  string message = 1;
+}
+
+message ReleaseReserveRequest {
+  repeated int32 codes = 1;
+}
+
+message ReleaseReserveResponse {
+  string message = 1;
+}
+
+message GetRemainingProductsRequest {
+  int32 warehouse_id =1;
+}
+
+message GetRemainingProductsResponse {
+  int32 count = 1;
+}

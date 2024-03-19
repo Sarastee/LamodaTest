@@ -18,9 +18,21 @@ test:
 	go test ./... -covermode count -coverpkg=github.com/sarastee/auth/internal/service/...,github.com/sarastee/auth/internal/api/... -count 5
 
 install-deps:
+	GOBIN=$(LOCAL_BIN) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.0
+	GOBIN=$(LOCAL_BIN) go install -mod=mod google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+	GOBIN=$(LOCAL_BIN) go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.53.3
 	GOBIN=$(LOCAL_BIN) go install golang.org/x/tools/cmd/goimports@v0.18.0
 	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@v3.14.0
 	GOBIN=$(LOCAL_BIN) go install github.com/vektra/mockery/v2@latest
+
+generate-warehouse-api:
+	mkdir -p pkg/warehouse_v1
+	protoc --proto_path api/warehouse_v1 \
+	--go_out=pkg/warehouse_v1 --go_opt=paths=source_relative \
+	--plugin=protoc-gen-go=bin/protoc-gen-go \
+	--go-grpc_out=pkg/warehouse_v1 --go-grpc_opt=paths=source_relative \
+	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
+	api/warehouse_v1/warehouse.proto
 
 fix-imports:
 	GOBIN=$(LOCAL_BIN) $(LOCAL_BIN)/goimports -w .
@@ -35,4 +47,4 @@ migration-down:
 	GOBIN=$(LOCAL_BIN) $(LOCAL_BIN)/goose -dir ${CUR_MIGRATION_DIR} postgres ${MIGRATION_DSN} down -v
 
 create-migration:
-	GOBIN=$(LOCAL_BIN) $(LOCAL_BIN)/goose -dir ${CUR_MIGRATION_DIR} create sql sql
+	GOBIN=$(LOCAL_BIN) $(LOCAL_BIN)/goose -dir ${CUR_MIGRATION_DIR} create testdata sql
