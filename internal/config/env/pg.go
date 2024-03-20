@@ -23,7 +23,7 @@ func NewPgCfgSearcher() *pgCfgSearcher {
 	return &pgCfgSearcher{}
 }
 
-func (s *pgCfgSearcher) Get() (*config.PGConfig, error) {
+func (s *pgCfgSearcher) Get() (*config.PgConfig, error) {
 	dbHost := os.Getenv(host)
 	if len(dbHost) == 0 {
 		return nil, errors.New("db host not found")
@@ -54,7 +54,7 @@ func (s *pgCfgSearcher) Get() (*config.PGConfig, error) {
 		return nil, errors.New("db name not found")
 	}
 
-	return &config.PGConfig{
+	return &config.PgConfig{
 		Host:     dbHost,
 		Port:     dbPortInt,
 		User:     dbUser,

@@ -10,7 +10,7 @@
     TODO: 
         ручка RESERVE(codes []int), 
         ручка REMOVE(code int) у warehouse_products, 
-        ручка ADD(product_code int, warehouse_id) if not exists Insert else Set amount++
+        ручка ADD(product_code int, warehouse_id) у reserved_products if not exists Insert else Set amount++
     
 // возврат резерва товаров(code []int) - транзакция:
     Проверка наличия товара в резерве
@@ -25,6 +25,6 @@
     -> уменьшеник количества на 1 в reserved_products
 
 // получение кол-ва оставшихся товаров на складе(warehouse_id int)
-    GETALL(warehouse_id) returns Amount
+    GETALL(warehouse_id) returns Amount (DONE)
 
-// TODO: linter, develop branch, GitHub Actions, Tests, gRPC-Gateway, swagger???
+// TODO: linter, GitHub Actions, Tests, gRPC-Gateway, swagger???
