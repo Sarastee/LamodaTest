@@ -2,8 +2,11 @@ package app
 
 import (
 	"context"
+	"log"
+	"net"
 
 	"github.com/sarastee/LamodaTest/internal/config"
+	desc "github.com/sarastee/LamodaTest/pkg/warehouse_v1"
 	"github.com/sarastee/platform_common/pkg/closer"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -71,11 +74,22 @@ func (a *App) initGRPCServer(ctx context.Context) error {
 
 	reflection.Register(a.grpcServer)
 
-	desc
+	desc.RegisterWarehouseV1Server(a.grpcServer, a.serviceProvider.WarehouseImpl(ctx))
 
 	return nil
 }
 
 func (a *App) runGRPCServer() error {
+	log.Printf("GRPC started on %s", a.serviceProvider.GRPCConfig().Address())
+	listener, err := net.Listen("tcp", a.serviceProvider.GRPCConfig().Address())
+	if err != nil {
+		return err
+	}
 
+	err = a.grpcServer.Serve(listener)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

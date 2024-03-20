@@ -18,9 +18,9 @@ type LogConfigSearcher interface {
 	Get() (*LogConfig, error)
 }
 
-// PGConfigSearcher interface for search PG config.
-type PGConfigSearcher interface {
-	Get() (*PGConfig, error)
+// PgConfigSearcher interface for search PG config.
+type PgConfigSearcher interface {
+	Get() (*PgConfig, error)
 }
 
 // Load dotenv from path to env
@@ -50,8 +50,8 @@ type LogConfig struct {
 	TimeFormat string
 }
 
-// PGConfig config for postgresql.
-type PGConfig struct {
+// PgConfig config for postgresql.
+type PgConfig struct {
 	Host     string
 	Port     int
 	User     string
@@ -60,7 +60,7 @@ type PGConfig struct {
 }
 
 // DSN ..
-func (cfg *PGConfig) DSN() string {
+func (cfg *PgConfig) DSN() string {
 	return fmt.Sprintf(
 		"postgres://%s:%s@%s:%d/%s",
 		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DbName,

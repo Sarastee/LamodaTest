@@ -22,10 +22,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WarehouseV1Client interface {
-	ReserveProducts(ctx context.Context, in *ReserveProductsRequest, opts ...grpc.CallOption) (*ReserveProductsResponse, error)
-	UndoReserveProducts(ctx context.Context, in *UndoReserveProductsRequest, opts ...grpc.CallOption) (*UndoReserveProductsResponse, error)
-	ReleaseReserve(ctx context.Context, in *ReleaseReserveRequest, opts ...grpc.CallOption) (*ReleaseReserveResponse, error)
-	GetRemainingProducts(ctx context.Context, in *GetRemainingProductsRequest, opts ...grpc.CallOption) (*GetRemainingProductsResponse, error)
+	Reserve(ctx context.Context, in *ReserveRequest, opts ...grpc.CallOption) (*ReserveResponse, error)
+	UndoReserve(ctx context.Context, in *UndoReserveRequest, opts ...grpc.CallOption) (*UndoReserveResponse, error)
+	Release(ctx context.Context, in *ReleaseRequest, opts ...grpc.CallOption) (*ReleaseResponse, error)
+	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 }
 
 type warehouseV1Client struct {
@@ -36,36 +36,36 @@ func NewWarehouseV1Client(cc grpc.ClientConnInterface) WarehouseV1Client {
 	return &warehouseV1Client{cc}
 }
 
-func (c *warehouseV1Client) ReserveProducts(ctx context.Context, in *ReserveProductsRequest, opts ...grpc.CallOption) (*ReserveProductsResponse, error) {
-	out := new(ReserveProductsResponse)
-	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/ReserveProducts", in, out, opts...)
+func (c *warehouseV1Client) Reserve(ctx context.Context, in *ReserveRequest, opts ...grpc.CallOption) (*ReserveResponse, error) {
+	out := new(ReserveResponse)
+	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/Reserve", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *warehouseV1Client) UndoReserveProducts(ctx context.Context, in *UndoReserveProductsRequest, opts ...grpc.CallOption) (*UndoReserveProductsResponse, error) {
-	out := new(UndoReserveProductsResponse)
-	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/UndoReserveProducts", in, out, opts...)
+func (c *warehouseV1Client) UndoReserve(ctx context.Context, in *UndoReserveRequest, opts ...grpc.CallOption) (*UndoReserveResponse, error) {
+	out := new(UndoReserveResponse)
+	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/UndoReserve", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *warehouseV1Client) ReleaseReserve(ctx context.Context, in *ReleaseReserveRequest, opts ...grpc.CallOption) (*ReleaseReserveResponse, error) {
-	out := new(ReleaseReserveResponse)
-	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/ReleaseReserve", in, out, opts...)
+func (c *warehouseV1Client) Release(ctx context.Context, in *ReleaseRequest, opts ...grpc.CallOption) (*ReleaseResponse, error) {
+	out := new(ReleaseResponse)
+	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/Release", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *warehouseV1Client) GetRemainingProducts(ctx context.Context, in *GetRemainingProductsRequest, opts ...grpc.CallOption) (*GetRemainingProductsResponse, error) {
-	out := new(GetRemainingProductsResponse)
-	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/GetRemainingProducts", in, out, opts...)
+func (c *warehouseV1Client) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error) {
+	out := new(GetAllResponse)
+	err := c.cc.Invoke(ctx, "/warehouse_v1.WarehouseV1/GetAll", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,10 +76,10 @@ func (c *warehouseV1Client) GetRemainingProducts(ctx context.Context, in *GetRem
 // All implementations must embed UnimplementedWarehouseV1Server
 // for forward compatibility
 type WarehouseV1Server interface {
-	ReserveProducts(context.Context, *ReserveProductsRequest) (*ReserveProductsResponse, error)
-	UndoReserveProducts(context.Context, *UndoReserveProductsRequest) (*UndoReserveProductsResponse, error)
-	ReleaseReserve(context.Context, *ReleaseReserveRequest) (*ReleaseReserveResponse, error)
-	GetRemainingProducts(context.Context, *GetRemainingProductsRequest) (*GetRemainingProductsResponse, error)
+	Reserve(context.Context, *ReserveRequest) (*ReserveResponse, error)
+	UndoReserve(context.Context, *UndoReserveRequest) (*UndoReserveResponse, error)
+	Release(context.Context, *ReleaseRequest) (*ReleaseResponse, error)
+	GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error)
 	mustEmbedUnimplementedWarehouseV1Server()
 }
 
@@ -87,17 +87,17 @@ type WarehouseV1Server interface {
 type UnimplementedWarehouseV1Server struct {
 }
 
-func (UnimplementedWarehouseV1Server) ReserveProducts(context.Context, *ReserveProductsRequest) (*ReserveProductsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReserveProducts not implemented")
+func (UnimplementedWarehouseV1Server) Reserve(context.Context, *ReserveRequest) (*ReserveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Reserve not implemented")
 }
-func (UnimplementedWarehouseV1Server) UndoReserveProducts(context.Context, *UndoReserveProductsRequest) (*UndoReserveProductsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UndoReserveProducts not implemented")
+func (UnimplementedWarehouseV1Server) UndoReserve(context.Context, *UndoReserveRequest) (*UndoReserveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UndoReserve not implemented")
 }
-func (UnimplementedWarehouseV1Server) ReleaseReserve(context.Context, *ReleaseReserveRequest) (*ReleaseReserveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReleaseReserve not implemented")
+func (UnimplementedWarehouseV1Server) Release(context.Context, *ReleaseRequest) (*ReleaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Release not implemented")
 }
-func (UnimplementedWarehouseV1Server) GetRemainingProducts(context.Context, *GetRemainingProductsRequest) (*GetRemainingProductsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRemainingProducts not implemented")
+func (UnimplementedWarehouseV1Server) GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
 func (UnimplementedWarehouseV1Server) mustEmbedUnimplementedWarehouseV1Server() {}
 
@@ -112,74 +112,74 @@ func RegisterWarehouseV1Server(s grpc.ServiceRegistrar, srv WarehouseV1Server) {
 	s.RegisterService(&WarehouseV1_ServiceDesc, srv)
 }
 
-func _WarehouseV1_ReserveProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReserveProductsRequest)
+func _WarehouseV1_Reserve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReserveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WarehouseV1Server).ReserveProducts(ctx, in)
+		return srv.(WarehouseV1Server).Reserve(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/warehouse_v1.WarehouseV1/ReserveProducts",
+		FullMethod: "/warehouse_v1.WarehouseV1/Reserve",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WarehouseV1Server).ReserveProducts(ctx, req.(*ReserveProductsRequest))
+		return srv.(WarehouseV1Server).Reserve(ctx, req.(*ReserveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WarehouseV1_UndoReserveProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UndoReserveProductsRequest)
+func _WarehouseV1_UndoReserve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UndoReserveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WarehouseV1Server).UndoReserveProducts(ctx, in)
+		return srv.(WarehouseV1Server).UndoReserve(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/warehouse_v1.WarehouseV1/UndoReserveProducts",
+		FullMethod: "/warehouse_v1.WarehouseV1/UndoReserve",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WarehouseV1Server).UndoReserveProducts(ctx, req.(*UndoReserveProductsRequest))
+		return srv.(WarehouseV1Server).UndoReserve(ctx, req.(*UndoReserveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WarehouseV1_ReleaseReserve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReleaseReserveRequest)
+func _WarehouseV1_Release_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReleaseRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WarehouseV1Server).ReleaseReserve(ctx, in)
+		return srv.(WarehouseV1Server).Release(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/warehouse_v1.WarehouseV1/ReleaseReserve",
+		FullMethod: "/warehouse_v1.WarehouseV1/Release",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WarehouseV1Server).ReleaseReserve(ctx, req.(*ReleaseReserveRequest))
+		return srv.(WarehouseV1Server).Release(ctx, req.(*ReleaseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WarehouseV1_GetRemainingProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRemainingProductsRequest)
+func _WarehouseV1_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WarehouseV1Server).GetRemainingProducts(ctx, in)
+		return srv.(WarehouseV1Server).GetAll(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/warehouse_v1.WarehouseV1/GetRemainingProducts",
+		FullMethod: "/warehouse_v1.WarehouseV1/GetAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WarehouseV1Server).GetRemainingProducts(ctx, req.(*GetRemainingProductsRequest))
+		return srv.(WarehouseV1Server).GetAll(ctx, req.(*GetAllRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,20 +192,20 @@ var WarehouseV1_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*WarehouseV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ReserveProducts",
-			Handler:    _WarehouseV1_ReserveProducts_Handler,
+			MethodName: "Reserve",
+			Handler:    _WarehouseV1_Reserve_Handler,
 		},
 		{
-			MethodName: "UndoReserveProducts",
-			Handler:    _WarehouseV1_UndoReserveProducts_Handler,
+			MethodName: "UndoReserve",
+			Handler:    _WarehouseV1_UndoReserve_Handler,
 		},
 		{
-			MethodName: "ReleaseReserve",
-			Handler:    _WarehouseV1_ReleaseReserve_Handler,
+			MethodName: "Release",
+			Handler:    _WarehouseV1_Release_Handler,
 		},
 		{
-			MethodName: "GetRemainingProducts",
-			Handler:    _WarehouseV1_GetRemainingProducts_Handler,
+			MethodName: "GetAll",
+			Handler:    _WarehouseV1_GetAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

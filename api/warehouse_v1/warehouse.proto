@@ -5,40 +5,40 @@ package warehouse_v1;
 option go_package = "github.com/sarastee/LamodaTest/pkg/warehouse_v1;warehouse_v1";
 
 service WarehouseV1 {
-  rpc ReserveProducts(ReserveProductsRequest) returns (ReserveProductsResponse);
-  rpc UndoReserveProducts(UndoReserveProductsRequest) returns (UndoReserveProductsResponse);
-  rpc ReleaseReserve(ReleaseReserveRequest) returns (ReleaseReserveResponse);
-  rpc GetRemainingProducts(GetRemainingProductsRequest) returns (GetRemainingProductsResponse);
+  rpc Reserve(ReserveRequest) returns (ReserveResponse);
+  rpc UndoReserve(UndoReserveRequest) returns (UndoReserveResponse);
+  rpc Release(ReleaseRequest) returns (ReleaseResponse);
+  rpc GetAll(GetAllRequest) returns (GetAllResponse);
 }
 
-message ReserveProductsRequest {
+message ReserveRequest {
   repeated int32 codes = 1;
 }
 
-message ReserveProductsResponse {
+message ReserveResponse {
   string message = 1;
 }
 
-message UndoReserveProductsRequest {
+message UndoReserveRequest {
   repeated int32 codes = 1;
 }
 
-message UndoReserveProductsResponse {
+message UndoReserveResponse {
   string message = 1;
 }
 
-message ReleaseReserveRequest {
+message ReleaseRequest {
   repeated int32 codes = 1;
 }
 
-message ReleaseReserveResponse {
+message ReleaseResponse {
   string message = 1;
 }
 
-message GetRemainingProductsRequest {
+message GetAllRequest {
   int32 warehouse_id =1;
 }
 
-message GetRemainingProductsResponse {
-  int32 count = 1;
+message GetAllResponse {
+  int64 amount = 1;
 }
