@@ -42,7 +42,7 @@ func (r *Repo) ReserveProduct(ctx context.Context, code int32, whID int32) error
 		Where(squirrel.And{
 			squirrel.Eq{warehouse.WarehouseProductCodeColumn: code},
 			squirrel.Eq{warehouse.WarehouseProductWarehouseIDColumn: whID}}).
-		Set(warehouse.WarehouseProductAmountColumn, squirrel.Expr(warehouse.WarehouseProductAmountColumn+" - 1"))
+		Set(warehouse.WarehouseProductAmountColumn, squirrel.Expr("amount - 1"))
 
 	query, args, err = builderUpdate.PlaceholderFormat(squirrel.Dollar).ToSql()
 	if err != nil {

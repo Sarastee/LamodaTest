@@ -46,7 +46,7 @@ func (r *Repo) UndoReserve(ctx context.Context, code int32, whID int32) error {
 			squirrel.Eq{reservedProductCodeColumn: code},
 			squirrel.Eq{reservedProductWarehouseIDColumn: whID},
 		}).
-		Set(reservedProductAmountColumn, squirrel.Expr(reservedProductAmountColumn+" - 1"))
+		Set(reservedProductAmountColumn, squirrel.Expr("amount - 1"))
 
 	query, args, err = builderUpdate.PlaceholderFormat(squirrel.Dollar).ToSql()
 	if err != nil {
