@@ -6,6 +6,7 @@ import (
 	"github.com/sarastee/platform_common/pkg/db"
 )
 
+// Service is a struct, containing zerolog.Logger, db.Client, db.TxManager and Interfaces of Repo and Service layers
 type Service struct {
 	logger    *zerolog.Logger
 	dbClient  db.Client
@@ -16,6 +17,7 @@ type Service struct {
 	reserveRepo repository.ReserveRepository
 }
 
+// NewService is method, returning pointer on Service struct
 func NewService(
 	logger *zerolog.Logger,
 	dbClient db.Client,

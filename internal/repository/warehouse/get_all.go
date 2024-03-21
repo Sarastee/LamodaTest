@@ -8,6 +8,7 @@ import (
 	"github.com/sarastee/platform_common/pkg/db"
 )
 
+// GetAll returns amount of all products on warehouse with given ID
 func (r *Repo) GetAll(ctx context.Context, whID int32) (int64, error) {
 	var amount int64
 

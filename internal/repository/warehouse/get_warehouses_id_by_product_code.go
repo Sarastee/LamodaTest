@@ -8,6 +8,7 @@ import (
 	"github.com/sarastee/platform_common/pkg/db"
 )
 
+// GetWarehousesIDByProductCode returns []int32 of available warehouses
 func (r *Repo) GetWarehousesIDByProductCode(ctx context.Context, code int32) ([]int32, error) {
 	builderSelect := r.sq.Select(WarehouseProductWarehouseIDColumn).
 		From(WarehouseProductTable).

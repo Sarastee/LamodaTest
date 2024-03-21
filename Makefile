@@ -13,9 +13,8 @@ make-down:
 
 
 
-test:
-	go clean -testcache
-	go test ./... -covermode count -coverpkg=github.com/sarastee/auth/internal/service/...,github.com/sarastee/auth/internal/api/... -count 5
+lint:
+	GOBIN=$(LOCAL_BIN) $(LOCAL_BIN)/golangci-lint run ./... --config .golangci.pipeline.yaml
 
 install-deps:
 	GOBIN=$(LOCAL_BIN) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.0

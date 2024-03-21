@@ -8,8 +8,9 @@ import (
 	"github.com/sarastee/platform_common/pkg/db"
 )
 
+// GetWarehouseProductAmount returns amount in int64 and error
 func (r *Repo) GetWarehouseProductAmount(ctx context.Context, code int32, whID int32) (int64, error) {
-	builderSelect := r.sq.Select("amount").
+	builderSelect := r.sq.Select(WarehouseProductAmountColumn).
 		From(WarehouseProductTable).
 		Where(squirrel.And{
 			squirrel.Eq{WarehouseProductCodeColumn: code},

@@ -16,12 +16,14 @@ const (
 
 var _ repository.ReserveRepository = (*Repo)(nil)
 
+// Repo is a struct, containing zerolog.logger, db.Client and squirrel.StatementBuilderType
 type Repo struct {
 	logger *zerolog.Logger
 	db     db.Client
 	sq     squirrel.StatementBuilderType
 }
 
+// NewRepo returns pointer for Repo struct
 func NewRepo(logger *zerolog.Logger, dbClient db.Client) *Repo {
 	return &Repo{
 		logger: logger,

@@ -2,18 +2,20 @@ package reserve
 
 import (
 	"context"
-	"errors"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
 	"github.com/sarastee/platform_common/pkg/db"
 )
 
-// GetAmountByProductCode is a repo layer method, returning amount of products in reserved_products table by give code
-func (r *Repo) GetAmountByProductCode(ctx context.Context, code int32) (int64, error) {
+// GetAmountByProductCodeAndWarehouseID is a repo layer method, which returns amount of products in reserved_products table
+// by given code and warehouse_id
+func (r *Repo) GetAmountByProductCodeAndWarehouseID(ctx context.Context, code int32, whID int32) (int64, error) {
 	builderSelect := r.sq.Select(reservedProductAmountColumn).
 		From(reservedProductsTable).
-		Where(squirrel.Eq{reservedProductCodeColumn: code})
+		Where(squirrel.And{
+			squirrel.Eq{reservedProductCodeColumn: code},
+			squirrel.Eq{reservedProductWarehouseIDColumn: whID}})
 
 	query, args, err := builderSelect.PlaceholderFormat(squirrel.Dollar).ToSql()
 	if err != nil {
@@ -21,7 +23,7 @@ func (r *Repo) GetAmountByProductCode(ctx context.Context, code int32) (int64, e
 	}
 
 	q := db.Query{
-		Name:     "reserve_repository.GetAmountByProductCode",
+		Name:     "reserve_repository.GetAmountByProductCodeAndWarehouseID",
 		QueryRaw: query,
 	}
 
@@ -33,9 +35,6 @@ func (r *Repo) GetAmountByProductCode(ctx context.Context, code int32) (int64, e
 
 	amount, err := pgx.CollectOneRow(rows, pgx.RowTo[int64])
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return 0, pgx.ErrNoRows
-		}
 		return 0, err
 	}
 

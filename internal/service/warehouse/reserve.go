@@ -8,11 +8,13 @@ import (
 	"github.com/sarastee/LamodaTest/internal/service"
 )
 
+// Reserve is Service layer method, which process request from API layer
 func (s *Service) Reserve(ctx context.Context, codes []int32) error {
 	s.logger.Debug().Msg("attempt to reserve products")
 
-	m := make(map[int32]int32) // TODO: реализация резерва нескольких товаров с одинаковым уникальным кодом
-	// TODO: -> заменить int32 на структуру с количеством
+	m := make(map[int32]int32)
+	// реализация резерва нескольких товаров с одинаковым уникальным кодом
+	// заменить int32 на структуру с количеством
 
 	for _, code := range codes {
 		whIDs, err := s.warehouseRepo.GetWarehousesIDByProductCode(ctx, code)
