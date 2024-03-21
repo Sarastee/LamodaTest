@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// Reserve is API layer method, returning message
 func (i *Implementation) Reserve(ctx context.Context, request *warehouse_v1.ReserveRequest) (*warehouse_v1.ReserveResponse, error) {
 	err := i.warehouseService.Reserve(ctx, request.Codes)
 	if err != nil {

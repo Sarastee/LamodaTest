@@ -9,6 +9,7 @@ import (
 	"github.com/sarastee/platform_common/pkg/db"
 )
 
+// IsWarehouseExists returns bool value for existence of warehouse with given id
 func (r *Repo) IsWarehouseExists(ctx context.Context, whID int32) (bool, error) {
 	builderSelect := r.sq.Select("TRUE").
 		From(warehouseTable).

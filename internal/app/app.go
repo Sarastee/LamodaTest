@@ -13,12 +13,14 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
+// App is struct, containing pointer for serviceProvider, pointer for grpc.Server, pointer for *http.Server and configPath
 type App struct {
 	serviceProvider *serviceProvider
 	grpcServer      *grpc.Server
 	configPath      string
 }
 
+// NewApp is a method, returning pointer for App struct
 func NewApp(ctx context.Context, configPath string) (*App, error) {
 	a := &App{configPath: configPath}
 
@@ -29,6 +31,7 @@ func NewApp(ctx context.Context, configPath string) (*App, error) {
 	return a, nil
 }
 
+// Run is a method, starting gRPC server and defer CloseAll function
 func (a *App) Run() error {
 	defer func() {
 		closer.CloseAll()

@@ -19,6 +19,7 @@ const (
 
 type pgCfgSearcher struct{}
 
+// NewPgCfgSearcher returns pointer for pgCfgSearcher struct
 func NewPgCfgSearcher() *pgCfgSearcher {
 	return &pgCfgSearcher{}
 }

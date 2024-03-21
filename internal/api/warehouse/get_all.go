@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// GetAll is API layer method, returning amount of products
 func (i *Implementation) GetAll(ctx context.Context, request *warehouse_v1.GetAllRequest) (*warehouse_v1.GetAllResponse, error) {
 	amount, err := i.warehouseService.GetAll(ctx, request.WarehouseId)
 	if err != nil {
