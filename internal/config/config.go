@@ -13,6 +13,11 @@ type GRPCConfigSearcher interface {
 	Get() (*GRPCConfig, error)
 }
 
+// HTTPConfigSearcher interface for search HTTP config
+type HTTPConfigSearcher interface {
+	Get() (*HTTPConfig, error)
+}
+
 // LogConfigSearcher interface for search Log config.
 type LogConfigSearcher interface {
 	Get() (*LogConfig, error)
@@ -41,6 +46,17 @@ type GRPCConfig struct {
 
 // Address get address for grpc server.
 func (cfg *GRPCConfig) Address() string {
+	return net.JoinHostPort(cfg.Host, cfg.Port)
+}
+
+// HTTPConfig is HTTP config struct
+type HTTPConfig struct {
+	Host string
+	Port string
+}
+
+// Address get address for grpc server.
+func (cfg *HTTPConfig) Address() string {
 	return net.JoinHostPort(cfg.Host, cfg.Port)
 }
 

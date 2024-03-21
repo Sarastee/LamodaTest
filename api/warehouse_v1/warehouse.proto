@@ -2,13 +2,34 @@ syntax = "proto3";
 
 package warehouse_v1;
 
+import "google/api/annotations.proto";
+
 option go_package = "github.com/sarastee/LamodaTest/pkg/warehouse_v1;warehouse_v1";
 
 service WarehouseV1 {
-  rpc Reserve(ReserveRequest) returns (ReserveResponse);
-  rpc UndoReserve(UndoReserveRequest) returns (UndoReserveResponse);
-  rpc Release(ReleaseRequest) returns (ReleaseResponse);
-  rpc GetAll(GetAllRequest) returns (GetAllResponse);
+  rpc Reserve(ReserveRequest) returns (ReserveResponse){
+    option (google.api.http) = {
+      post: "/warehouse/v1/reserve"
+      body: "*"
+    };
+  };
+  rpc UndoReserve(UndoReserveRequest) returns (UndoReserveResponse){
+    option (google.api.http) = {
+      post: "/warehouse/v1/undoreserve"
+      body: "*"
+    };
+  };
+  rpc Release(ReleaseRequest) returns (ReleaseResponse){
+    option (google.api.http) = {
+      post: "/warehouse/v1/release"
+      body: "*"
+    };
+  };
+  rpc GetAll(GetAllRequest) returns (GetAllResponse){
+    option (google.api.http) = {
+      get: "/warehouse/v1/getall/{warehouse_id}"
+    };
+  };
 }
 
 message ReserveRequest {
