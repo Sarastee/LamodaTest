@@ -6,7 +6,7 @@ COPY go.mod .
 
 COPY . .
 
-RUN go build -o laAPI ./cmd/service/main.go
+RUN go build -o laAPI ./cmd/app/main.go
 
 FROM ubuntu:20.04
 

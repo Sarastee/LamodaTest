@@ -1,0 +1,101 @@
+# Lamoda HTTP
+
+###
+# @name GetAll (Success)
+GET localhost:8081/warehouse/v1/getall/3
+
+###
+# @name GetAll (Warehouse not Exists)
+GET localhost:8081/warehouse/v1/getall/4
+
+###
+# @name Reserve (Success)
+POST localhost:8081/warehouse/v1/reserve
+Content-Type: application/json
+
+{
+  "codes": [
+    301,
+    102
+  ]
+}
+
+###
+# @name Reserve (Not Enough Products on WH)
+POST localhost:8081/warehouse/v1/reserve
+Content-Type: application/json
+
+{
+  "codes": [
+    201
+  ]
+}
+
+###
+# @name Reserve (No available WH)
+POST localhost:8081/warehouse/v1/reserve
+Content-Type: application/json
+
+{
+  "codes": [
+    101
+  ]
+}
+
+###
+# @name Release (Success)
+POST localhost:8081/warehouse/v1/release
+Content-Type: application/json
+
+{
+  "codes": [
+    301,
+    102
+  ]
+}
+
+###
+# @name Release (No products in reserve)
+POST localhost:8081/warehouse/v1/release
+Content-Type: application/json
+
+{
+  "codes": [
+    101
+  ]
+}
+
+###
+# @name Reserve (For UndoReserve)
+POST localhost:8081/warehouse/v1/reserve
+Content-Type: application/json
+
+{
+  "codes": [
+    301,
+    102
+  ]
+}
+
+###
+# @name UndoReserve (Success)
+POST localhost:8081/warehouse/v1/undoreserve
+Content-Type: application/json
+
+{
+  "codes": [
+    301,
+    102
+  ]
+}
+
+###
+# @name UndoReserve (No product in list)
+POST localhost:8081/warehouse/v1/undoreserve
+Content-Type: application/json
+
+{
+  "codes": [
+    101
+  ]
+}

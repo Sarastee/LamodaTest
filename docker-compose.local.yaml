@@ -23,3 +23,18 @@ services:
       - storage
     environment:
       PG_HOST: storage
+
+  la_api:
+    build:
+      context: .
+      dockerfile: deploy/dockerfiles/laAPI.Dockerfile
+    env_file:
+      - deploy/env/.env.local
+    depends_on:
+      - storage
+    environment:
+      PG_HOST: storage
+    ports:
+      - "${HTTP_PORT}:${HTTP_PORT}"
+      - "${GRPC_PORT}:${GRPC_PORT}"
+    restart: on-failure
