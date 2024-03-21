@@ -25,7 +25,7 @@ make make-up
 Чтобы остановить приложения и схлопнуть котнейнеры выполнить команду в `Makefile`:
 
 ```bash
-make make-up
+make make-down
 ```
 ---
 
